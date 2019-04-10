@@ -8,4 +8,6 @@ Documentación del CPD del IES Domingo Pérez Minik.
 
 - Instalación de Xen Center 7.2.0
 
-Windows: choco install -y xencenter
+Windows:  `choco install -y xencenter`
+
+![Diagrama de la red](images/diagrama.png)
