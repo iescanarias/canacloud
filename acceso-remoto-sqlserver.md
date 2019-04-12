@@ -16,13 +16,13 @@ A continuación se explican los pasos para configurar el acceso remoto al servid
 
    ![Datos de conexión al servidor](images/acceso-remoto-sqlserver-03.png)
 
-| Campo          | Descripción                                                  | Valor                            |
-| -------------- | ------------------------------------------------------------ | -------------------------------- |
-| Server type    | Tipo de servidor.                                            | `Database Engine`                |
-| Server name    | Cadena de conexión para el servidor en formato `IP\INSTANCIA,PUERTO`. | `172.17.198.254\SQLEXPRESS,1433` |
-| Authentication | Modo de autenticación.                                       | `SQL Server Authentication`      |
-| Login          | Nombre de usuario.                                           | `sa` (administrador)             |
-| Password       | Contraseña.                                                  | `*****`                          |
+    | Campo          | Descripción                                                  | Valor                            |
+    | -------------- | ------------------------------------------------------------ | -------------------------------- |
+    | Server type    | Tipo de servidor.                                            | `Database Engine`                |
+    | Server name    | Cadena de conexión para el servidor en formato `IP\INSTANCIA,PUERTO`. | `172.17.198.254\SQLEXPRESS,1433` |
+    | Authentication | Modo de autenticación.                                       | `SQL Server Authentication`      |
+    | Login          | Nombre de usuario.                                           | `sa` (administrador)             |
+    | Password       | Contraseña.                                                  | `*****`                          |
 
 4. Pulsamos el botón "Connect" y ya estamos conectados.
 
