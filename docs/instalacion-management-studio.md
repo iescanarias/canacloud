@@ -29,30 +29,30 @@ Abrir un terminal y ejecutar los siguientes comandos:
 
 1. Importar la clave pública GPG del repositorio:
 
-    ```bash
-    curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
-    ```
+```bash
+curl -s https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
+```
 
 2. Añadir el repositorio de paquetes:
 
-    ```bash
-    sudo add-apt-repository "$(wget -qO https://packages.microsoft.com/config/ubuntu/16.04/mssql-server-2017.list)"
-    ```
+```bash
+sudo add-apt-repository "$(wget -qO- https://packages.microsoft.com/config/ubuntu/18.04/prod.list)"
+```
 
 3. Actualizamos la lista de paquetes con la información del nuevo repositorio:
 
-    ```bash
+```bash
 sudo apt-get update
-    ```
+```
 
 4. Instalamos SQL Server:
 
-    ```bash
-sudo apt-get install mssql-server mssql-tools
-    ```
+```bash
+sudo apt-get install mssql-tools
+```
 
 5. Ejecutamos el script de configuración:
 
-    ```bash
+```bash
 sudo /opt/mssql/bin/mssql-conf setup
-    ```
+```
