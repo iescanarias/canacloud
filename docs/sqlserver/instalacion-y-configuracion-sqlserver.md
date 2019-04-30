@@ -17,6 +17,8 @@ En este documento se describe cómo instalar SQL Server 2014 Express y configura
 
 ## Configuración
 
+A continuación se explica cómo permitir conexiones remotas al servidor SQL Server recién instalado.
+
 ### Habilitar las conexiones remotas
 
 1. Abrir **SQL Server Management Studio** y conectar a la instancia local de SQL Server.
