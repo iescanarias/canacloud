@@ -31,7 +31,11 @@ En este documento se describe cómo instalar SQL Server 2014 Express y configura
 
    ![Propiedades del servidor](images/instalacion-y-configuracion-sqlserver-03.png)
 
-4. Pulsar "Ok" para guardar los cambios.
+4. En el cuadro de diálogo "Server Properties", ahora seleccionamos la página "Security" y activamos "SQL Server and Windows Authentication mode" para poder iniciar sesión con los usuarios del SQL Server.
+
+   ![Propiedades del servidor](images/instalacion-y-configuracion-sqlserver-13.png)
+
+5. Pulsar "Ok" para guardar los cambios.
 
 ### Habilitar TCP/IP
 
