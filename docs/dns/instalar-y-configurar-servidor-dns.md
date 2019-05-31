@@ -51,7 +51,7 @@ La configuración de BIND consiste en múltiples ficheros, todos ellos incluidos
 
 2. Modificamos el fichero y le añadimos lo siguiente  dentro de `options`:
 
-    ```json
+    ```
     options {
         [...]
 
@@ -98,7 +98,7 @@ La configuración de BIND consiste en múltiples ficheros, todos ellos incluidos
 
 3. Añadimos la zona de búsqueda directa (para resolver nombres de dominio en IPs):
 
-   ```json
+   ```
    zone "iesdpm.es" {
        type master;
        file "/etc/bind/zones/db.iesdpm.es";
@@ -107,7 +107,7 @@ La configuración de BIND consiste en múltiples ficheros, todos ellos incluidos
 
 5. Y la zona de búsqueda inversa (para resolver IPs en nombres de dominio):
 
-   ```json
+   ```
    zone "0.168.192.in-addr.arpa" {
        type master;
        file "/etc/bind/zones/db.192.168.0";  # red 192.168.0.0/24
