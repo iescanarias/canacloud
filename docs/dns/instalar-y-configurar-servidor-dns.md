@@ -55,7 +55,7 @@ La configuración de BIND consiste en múltiples ficheros, todos ellos incluidos
     options {
         [...]
 
-        // reenviamos peticiones a servidores DNS de Google
+        // reenviamos peticiones a los servidores DNS de Google
         forwarders {
               8.8.8.8;
               8.8.4.4;
@@ -99,9 +99,9 @@ La configuración de BIND consiste en múltiples ficheros, todos ellos incluidos
 3. Añadimos la zona de búsqueda directa (para resolver nombres de dominio en IPs):
 
    ```json
-   zone "iesdomingoperezminik.es" {
+   zone "iesdpm.es" {
        type master;
-       file "/etc/bind/zones/db.iesdomingoperezminik.es";
+       file "/etc/bind/zones/db.iesdpm.es";
    };
    ```
 
@@ -131,13 +131,13 @@ Aquí es donde definimos los registros de tipo "A".
 2. Usamos el fichero de ejemplo como base para nuestra zona de búsqueda directa:
 
    ```bash
-	cp /etc/bind/db.local /etc/bind/zones/db.iesdomingoperezminik.es
+	cp /etc/bind/db.local /etc/bind/zones/db.iesdpm.es
 	```
 	
 3. Editamos el fichero de la zona de búsqueda directa:
 
    ```bash
-   sudo nano /etc/bind/zones/db.iesdomingoperezminik.es
+   sudo nano /etc/bind/zones/db.iesdpm.es
    ```
 
    Y nos encontramos el siguiente contenido:
@@ -162,7 +162,7 @@ Aquí es donde definimos los registros de tipo "A".
 6. Editamos el registro SOA, remplazando `localhost` por el FQDN de nuestro dominio. 
 
    ```
-   @       IN      SOA     iesdomingoperezminik.es. (
+   @       IN      SOA     iesdpm.es. root.iesdpm.es. (
    ```
    
 6. Incrementamos el valor de `serial` indicando que la versión ha cambiado (debe hacerse cada vez que se modifique este fichero).
@@ -171,27 +171,29 @@ Aquí es donde definimos los registros de tipo "A".
                                  2         ; Serial
    ```
 
-7. Comentamos los 3 últimos registros del fichero añadiendo un ";" al principio de cada línea.
+7. Eliminamos los 3 últimos registros del fichero:
 
    ```
-   ; @       IN      NS      localhost.
-   ; @       IN      A       127.0.0.1
-   ; @       IN      AAAA    ::1
+   @			IN      NS      localhost.
+   @			IN      A       127.0.0.1
+   @			IN      AAAA    ::1
    ```
 
-8. Añadimos un registro "NS" para nuestro servidor de nombres al final el fichero:
+7. Añadimos un registro "NS" para nuestro servidor de nombres al final el fichero:
 
    ```
    ; name servers - NS records
-       IN      NS      dns.iesdomingoperezminik.es.
+   @			IN		NS		iesdpm.es.
+   @			IN		A		192.168.0.250		; IP del servidor DNS
    ```
 
-9. A continuación, añadimos los registros "A" para los hosts de nuestro dominio, tantos como necesitemos:
+8. A continuación, añadimos los registros "A" para los hosts de nuestro dominio, tantos como necesitemos:
 
    ```
    ; 192.168.0.0/24 - A records
-   host1.iesdomingoperezminik.es.        IN      A      192.168.0.1
-   host2.iesdomingoperezminik.es.        IN      A      192.168.0.2
+   dns    		IN      A		192.168.0.250		
+   host1		IN      A		192.168.0.1
+   host2		IN      A		192.168.0.2
    [...]
    ```
 
@@ -231,10 +233,10 @@ Aquí se definen los registros de tipo "PTR" para las búsquedas inversas.
    1.0.0   IN      PTR     localhost.      
    ```
 
-3. Editamos el registro SOA, remplazando `localhost` por el FQDN de nuestro dominio. 
+3. Editamos el registro SOA, remplazando `localhost` por el FQDN de nuestro dominio (*iesdomingoperezminik.es*.; acabado en punto). 
 
    ```
-   @       IN      SOA     iesdomingoperezminik.es. (
+   @       IN      SOA     iesdpm.es. root.iesdpm.es. (
    ```
 
 4. Incrementamos el valor de `serial` indicando que la versión ha cambiado (debe hacerse cada vez que se modifique este fichero).
@@ -243,26 +245,27 @@ Aquí se definen los registros de tipo "PTR" para las búsquedas inversas.
                                  2         ; Serial
    ```
 
-5. Comentamos los 2 últimos registros del fichero añadiendo un ";" al principio de cada línea.
+5. Eliminamos los 2 últimos registros del fichero:
 
    ```
-   ; @       IN      NS      localhost.      
-   ; 1.0.0   IN      PTR     localhost.   
+   @			IN      NS      localhost.      
+   1.0.0		IN      PTR     localhost.   
    ```
 
 6. Añadimos un registro "NS" para nuestro servidor de nombres al final el fichero:
 
    ```
    ; name servers - NS records
-       IN      NS      dns.iesdomingoperezminik.es.
+   @			IN      NS      iesdpm.es.
    ```
 
 7. A continuación, añadimos los registros "PTR" para los hosts de nuestro dominio, tantos como necesitemos:
 
    ```
    ; 192.168.0.0/24 - PTR records
-   1   IN      PTR     host1.iesdomingoperezminik.es. ; 192.168.0.1
-   2   IN      PTR     host2.iesdomingoperezminik.es. ; 192.168.0.2
+   250   		IN      PTR     dns.iesdpm.es.
+   1   		IN      PTR     host1.iesdpm.es.
+   2   		IN      PTR     host2.iesdpm.es.
    [...]
    ```
 
@@ -277,6 +280,23 @@ sudo named-checkconf
 ```
 
 Si los ficheros de configuración están correctos, terminará sin decir nada. Si encuentra algún problema, debemos revisar de nuevo los fichero de configuración y volver a ejecutar el comando anterior.
+
+Para comprobar también los ficheros de zonas de búsqueda, usamos la opción `-z`:
+
+```bash
+sudo named-checkconf -z
+```
+
+Obteniendo algo parecido a lo siguiente en caso de que todo esté bien:
+
+```bash
+zone iesdpm.es/IN: loaded serial 3
+zone 0.168.192.in-addr.arpa/IN: loaded serial 2
+zone localhost/IN: loaded serial 2
+zone 127.in-addr.arpa/IN: loaded serial 1
+zone 0.in-addr.arpa/IN: loaded serial 1
+zone 255.in-addr.arpa/IN: loaded serial 1
+```
 
 Una vez hemos comprobado que los ficheros están correctos, podemos reiniciar el servicio BIND.
 
