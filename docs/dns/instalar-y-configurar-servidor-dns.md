@@ -54,17 +54,15 @@ La configuración de BIND consiste en múltiples ficheros, todos ellos incluidos
     ```
     options {
         [...]
-
-        // reenviamos peticiones a los servidores DNS de Google
+    // reenviamos peticiones a los servidores DNS de Google
         forwarders {
               8.8.8.8;
               8.8.4.4;
         };
-
-    	[...]
-    };
+        [...]
+};
     ```
-
+    
 3. Reiniciamos el servicio para que los cambios surtan efecto:
 
    ```bash
