@@ -54,7 +54,7 @@ La configuración de BIND consiste en múltiples ficheros, todos ellos incluidos
     ```
     // reenviamos peticiones a los servidores DNS de Google
     forwarders {
-    8.8.8.8;
+        8.8.8.8;
         8.8.4.4;
     };
     ```
